@@ -152,27 +152,48 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-article-title" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-spring-三大框架" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/13/article-title/">Java笔记</a>
+      <a class="article-title" href="/2018/11/11/spring-三大框架/">spring(三大框架)</a>
     </h1>
   
 
         
-        <a href="/2018/10/13/article-title/" class="archive-article-date">
-  	<time datetime="2018-10-13T06:05:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-13</time>
+        <a href="/2018/11/11/spring-三大框架/" class="archive-article-date">
+  	<time datetime="2018-11-11T13:44:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-11</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="一、Sping"><a href="#一、Sping" class="headerlink" title="一、Sping"></a>一、Sping</h2><p>&emsp;&emsp;Spring 是一个开源框架，为简化企业级应用开发而生。Spring 可以是使简单的 JavaBean 实现以前只有 EJB 才能<br>实现的功能。Spring 是一个 IOC 和 AOP 容器框架。</p>
+<h3 id="1-1Spring-容器的主要核心是："><a href="#1-1Spring-容器的主要核心是：" class="headerlink" title="1.1Spring 容器的主要核心是："></a>1.1Spring 容器的主要核心是：</h3><p>&emsp;&emsp;控制反转（IOC），传统的 java 开发模式中，当需要一个对象时，我们会自己使用 new 或者 getInstance 等直接<br>或者间接调用构造方法创建一个对象。而在 spring 开发模式中，spring 容器使用了工厂模式为我们创建了所需要的对<br>象，不需要我们自己创建了，直接调用 spring 提供的对象就可以了，这是控制反转的思想。</p>
+<p>&emsp;&emsp;面向切面编程（AOP），在面向对象编程（oop）思想中，我们将事物纵向抽成一个个的对象。而在面向切面编程中，我们将一个个的对象某些类似的方面横向抽成一个切面，对这个切面进行一些如权限控制、事物管理，记录日志等公用操作处理的过程就是面向切面编程的思想。AOP 底层是动态代理，如果是接口采用 JDK 动态代理，如果是类采用CGLIB 方式实现动态代理。</p>
+<p>&emsp;&emsp;依赖注入（DI），spring 使用 javaBean 对象的 set 方法或者带参数的构造方法为我们在创建所需对象时将其属<br>性自动设置所需要的值的过程，就是依赖注入的思想。</p>
+<h3 id="1-2搭建Spring框架"><a href="#1-2搭建Spring框架" class="headerlink" title="1.2搭建Spring框架:"></a>1.2搭建Spring框架:</h3><p>1&gt;添加依赖包（坐标）<br>        spring-context(5个)<br>    2&gt;创建核心配置文件</p>
+<pre><code>3&gt;创建Srping IOC容器
+    ApplicationContext:单例（BeanFactory子接口）
+        ClassPathXmlApplicationContext(bean.xml):（常用）
+        FileSystemXmlApplicationContext():磁盘位置路径（不用考虑）
+        AnnotationConfigApplicationContext():读取注解配置文件
+        BeanFactory:多例（不常用）
+</code></pre><p>4&gt;根据ID获取Bean对象<br>        ac.getBean(id,类的字节码)</p>
+<p>5&gt;Bean创建方式<br>    1.1&gt;默认构造函数实例化Bean对象<br>    2.1&gt;工厂中的普通方法（返回对象的实例）：工厂的方式实例化Bean对象</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"beanFactory"</span> <span class="attr">class</span>=<span class="string">"com.itheima.factory.BeanFactory"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"user"</span> <span class="attr">factory-bean</span>=<span class="string">"beanFactory"</span> <span class="attr">factory-method</span>=<span class="string">"getUserInstance"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>​    3.1&gt;工厂中的静态方法（返回对象的实例）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"user"</span> <span class="attr">class</span>=<span class="string">"com.itheima.factory.BeanFactory"</span> <span class="attr">factory-method</span>=<span class="string">"getUserInstance"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>6&gt;Bean的作用范围：<br>    scope：指定实例化Bean范围<br>            singleton(默认)<br>            prototype<br>            {request<br>            session<br>            global-session}</p>
+<h3 id="1-3Spring-的常用注解"><a href="#1-3Spring-的常用注解" class="headerlink" title="1.3Spring 的常用注解:"></a>1.3Spring 的常用注解:</h3><p>&emsp;&emsp;Spring 在 2.5 版本以后开始支持注解的方式来配置依赖注入。可以用注解的方式来代替 xml 中 bean 的描述。注解注入将会被容器在 XML 注入之前被处理，所以后者会覆盖掉前者对于同一个属性的处理结果。<br>&emsp;&emsp;注解装配在 spring 中默认是关闭的。所以需要在 spring 的核心配置文件中配置一下才能使用基于注解的装配模式。配置方式如下：<br>&emsp;&emsp;&lt;context:annotation-config /&gt;<br>常用的注解：<br>@Required:该注解应用于设值方法<br>@Autowired：该注解应用于有值设值方法、非设值方法、构造方法和变量。<br>@Qualifier：该注解和@Autowired 搭配使用，用于消除特定 bean 自动装配的歧义。</p>
+<h3 id="1-4简单介绍一下-Spring-bean-的生命周期："><a href="#1-4简单介绍一下-Spring-bean-的生命周期：" class="headerlink" title="1.4简单介绍一下 Spring bean 的生命周期："></a>1.4简单介绍一下 Spring bean 的生命周期：</h3><p>bean 定义：在配置文件里面用来进行定义。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>bean 初始化：有两种方式初始化:<br>1.在配置文件中通过指定 init-method 属性来完成<br>2.实现 org.springframwork.beans.factory.InitializingBean 接口<br>bean 调用：有三种方式可以得到 bean 实例，并进行调用<br>bean 销毁：销毁有两种方式<br>1.使用配置文件指定的 destroy-method 属性<br>2.实现 org.springframwork.bean.factory.DisposeableBean 接口</p>
+
       
 
       
@@ -180,11 +201,97 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">SSM_Spring</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/13/article-title/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/11/11/spring-三大框架/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Javasc" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/11/Javasc/">Javasc</a>
+    </h1>
+  
+
+        
+        <a href="/2018/11/11/Javasc/" class="archive-article-date">
+  	<time datetime="2018-11-11T13:37:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Vue"><a href="#Vue" class="headerlink" title="Vue"></a>Vue</h1><h2 id="1-vue简介"><a href="#1-vue简介" class="headerlink" title="1 vue简介"></a>1 vue简介</h2><p>Vue (读音 /vjuː/，类似于 <strong>view</strong>) 是一套用于构建用户界面的<strong>渐进式框架</strong>。和AngularJS的语法非常的相似。</p>
+<p>Vue 的一些语法和 AngularJS 的很相似 (例如 <code>v-if</code> vs <code>ng-if</code>)。因为 AngularJS 是 Vue 早期开发的灵感来源。然而，AngularJS 中存在的许多问题，在 Vue 中已经得到解决。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/11/11/Javasc/">展开全文 >></a>
         </p>
       
 
@@ -305,6 +412,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SSM_Spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
